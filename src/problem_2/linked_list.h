@@ -8,7 +8,8 @@ template<class T>
 class LinkedList;
 
 template<class T>
-class ListNode {
+class ListNode 
+{
     friend class LinkedList<T>;
 private:
     T val;
@@ -19,13 +20,15 @@ public:
 };
 
 template<class T>
-class LinkedList : public List<T> {
+class LinkedList : public List<T> 
+{
 private:
     ListNode<T> *head;  // this implementation has a dummy head (sentry head node)
     size_t num_of_element;
 
 public:
-    LinkedList() {
+    LinkedList() 
+    {
         head = new ListNode<T>();
         num_of_element = 0;
     }
@@ -33,21 +36,29 @@ public:
     LinkedList(size_t capacity) : LinkedList<T>() {} // to make test consistent
 
     // copy constructor
-    LinkedList(const LinkedList<T> &other_list) : LinkedList() {
+    LinkedList(const LinkedList<T> &other_list) : LinkedList() 
+    {
         /*
          * TODO: homework
          */
+        num_of_element = other_list.num_of_element;
+        head = new ListNode<num_of_element>;
+        for (int i = 0; i < num_of_element; i++)
+            head[i] = other_list.head[i];
     }
 
     // destructor
-    virtual ~LinkedList() {
+    virtual ~LinkedList() 
+    {
         ListNode<T> *p0 = head, *p1 = head->next;
-        if (p1 == nullptr) {
+        if (p1 == nullptr) 
+        {
             delete p0;
             return;
         }
 
-        while (p1 != nullptr) {
+        while (p1 != nullptr) 
+        {
             delete p0;
             p0 = p1;
             p1 = p1->next;
@@ -55,38 +66,48 @@ public:
         delete p0;
     }
 
-    size_t capacity() const override {
+    size_t capacity() const override 
+    {
         return num_of_element;
     }
 
-    size_t size() const override {
+    size_t size() const override 
+    {
         return num_of_element;
     }
 
-    T &operator[](size_t index) {
-        if (index >= num_of_element) {
+    T &operator[](size_t index) 
+    {
+        if (index >= num_of_element) 
+        {
             throw std::out_of_range("index out of range");
         }
         ListNode<T> *p = head;
-        for (size_t i = 0; i < index; i++) {
+        for (size_t i = 0; i < index; i++) 
+        {
             p = p->next;
         }
         return p->next->val;
     }
 
-    bool operator==(const LinkedList<T> &other_list) {
-        if (num_of_element != other_list.num_of_element) {
+    bool operator==(const LinkedList<T> &other_list) 
+    {
+        if (num_of_element != other_list.num_of_element) 
+        {
             return false;
         }
 
         ListNode<T> *p1 = head->next;
         ListNode<T> *p2 = other_list.head->next;
-        for (size_t i = 0; i < num_of_element; i++) {
-            if (p1 == nullptr || p2 == nullptr) {
+        for (size_t i = 0; i < num_of_element; i++) 
+        {
+            if (p1 == nullptr || p2 == nullptr) 
+            {
                 return false;
             }
 
-            if (p1->val != p2->val) {
+            if (p1->val != p2->val) 
+            {
                 return false;
             }
             p1 = p1->next;
